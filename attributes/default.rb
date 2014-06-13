@@ -1,17 +1,19 @@
 # Load settings from data bag 'elasticsearch/settings'
 #
-settings = Chef::DataBagItem.load('elasticsearch', 'settings')[node.chef_environment] rescue {}
-Chef::Log.debug "Loaded settings: #{settings.inspect}"
+# mattcl - chef provides a mechanism for overriding attributes. Why is this
+# being done?
+# settings = Chef::DataBagItem.load('elasticsearch', 'settings')[node.chef_environment] rescue {}
+# Chef::Log.debug "Loaded settings: #{settings.inspect}"
 
 # Initialize the node attributes with node attributes merged with data bag attributes
 #
-node.default[:elasticsearch] ||= {}
-node.normal[:elasticsearch]  ||= {}
+# node.default[:elasticsearch] ||= {}
+# node.normal[:elasticsearch]  ||= {}
 
-include_attribute 'elasticsearch::customize'
+# include_attribute 'elasticsearch::customize'
 
-node.normal[:elasticsearch]    = DeepMerge.merge(node.default[:elasticsearch].to_hash, node.normal[:elasticsearch].to_hash)
-node.normal[:elasticsearch]    = DeepMerge.merge(node.normal[:elasticsearch].to_hash, settings.to_hash)
+# node.normal[:elasticsearch]    = DeepMerge.merge(node.default[:elasticsearch].to_hash, node.normal[:elasticsearch].to_hash)
+# node.normal[:elasticsearch]    = DeepMerge.merge(node.normal[:elasticsearch].to_hash, settings.to_hash)
 
 
 # === VERSION AND LOCATION
